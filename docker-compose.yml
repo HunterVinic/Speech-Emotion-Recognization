@@ -1,0 +1,12 @@
+version: '3'
+services:
+  speechemotion-web:
+    image: python:3.9
+    ports:
+      - '172.17.0.2:8000'
+    environment:
+      - DISPLAY=:0
+    command: sh -c 'apt-get update && apt-get install -y xvfb && xvfb-run -a --server-args="-screen 0 1280x1024x24 -ac +extension RANDR" python main.py'
+    volumes:
+      - .:/app
+    working_dir: /app

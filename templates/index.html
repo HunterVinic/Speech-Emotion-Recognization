@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Emotion Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .custom-file-upload {
+            display: inline-block;
+            padding: 8px 20px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: #fff;
+            border-radius: 4px;
+            border: none;
+        }
+
+        .custom-file-upload:hover {
+            background-color: #45a049;
+        }
+
+        .custom-file-upload:active {
+            background-color: #3c903c;
+        }
+
+        .custom-file-name {
+            margin-left: 10px;
+            font-style: italic;
+        }
+
+        .prediction-btn {
+            display: block;
+            margin: 0 auto; /* Center align the button */
+            margin-top: 20px;
+            padding: 8px 20px;
+            background-color: #4287f5;
+            color: #fff;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .prediction-btn:hover {
+            background-color: #336fc2;
+        }
+
+        .prediction-btn:active {
+            background-color: #285093;
+        }
+        ol {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 400px;  /* Adjust the width as needed */
+    }
+    </style>
+</head>
+<body>
+    <h1>Emotion Prediction</h1>
+
+    {% if emotion %}
+    <h2>Predicted Emotion: {{ emotion }}</h2>
+    {% endif %}
+
+    <form method="POST" action="/" enctype="multipart/form-data">
+        <label class="custom-file-upload">
+            Choose Audio File
+            <input type="file" name="audio_file" onchange="updateFileName(event)">
+        </label>
+        <span id="file-name" class="custom-file-name">No file chosen</span>
+        <button type="submit" class="prediction-btn">Predict</button>
+    </form>
+    <h2>How to use this model:</h2>
+<ol>
+    <li>Press "Open the Audio file"</li>
+    <li>Choose the audio file</li>
+    <li>Press the Predict Button</li>
+</ol>
+
+<h2>Important Note about Results</h2>
+<ol>
+    <li>01 = neutral</li>
+    <li>02 = angry</li>
+    <li>03 = happy</li>
+    <li>04 = sad</li>
+    <li>05 = frustrated</li>
+</ol>
+
+
+<h2>Intensity Labels</h2>
+<ol>
+    <li>a = Normal</li>
+    <li>b = Strong</li>
+</ol>
+
+
+
+    <script>
+        function updateFileName(event) {
+            var fileInput = event.target;
+            var fileNameSpan = document.getElementById("file-name");
+            fileNameSpan.textContent = fileInput.files[0].name;
+        }
+
+        // Check if a file has been selected previously
+        var fileInput = document.getElementById("audio-file");
+        var fileNameSpan = document.getElementById("file-name");
+        if (fileInput.value) {
+            fileNameSpan.textContent = fileInput.files[0].name;
+        }
+    </script>
+</body>
+</html>
